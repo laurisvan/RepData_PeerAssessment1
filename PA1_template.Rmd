@@ -114,6 +114,12 @@ meansCorrected <- filledData %>%
 meanCorrectedSteps <- mean(meansCorrected$total)
 medianCorrectedSteps <- median(meansCorrected$total)
 meanStepsDiff <- sum(meansCorrected$total) - sum(means$total)
+
+hist(meansCorrected$total, breaks=10,
+     main="Histogram of steps per day (missing values filled)",
+     ylab="# of days",
+     xlab="total steps"
+)
 ```
 
 The number of values missing in the original data set is

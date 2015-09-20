@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 This experiment examines personal activity monitoring device data, with the aim to answer the following questions:
 
@@ -54,7 +59,7 @@ hist(means$total, breaks=10,
 )
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 The mean total number of steps per day is 10766,
 the median total number of steps is 10765.
@@ -84,7 +89,7 @@ plot(dailyPatterns$mean, type="l",
 )
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
 The highest activity 5-minute interval is 835
 (13:55).
@@ -117,7 +122,15 @@ meansCorrected <- filledData %>%
 meanCorrectedSteps <- mean(meansCorrected$total)
 medianCorrectedSteps <- median(meansCorrected$total)
 meanStepsDiff <- sum(meansCorrected$total) - sum(means$total)
+
+hist(meansCorrected$total, breaks=10,
+     main="Histogram of steps per day (missing values filled)",
+     ylab="# of days",
+     xlab="total steps"
+)
 ```
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 The number of values missing in the original data set is
 2304. These were replaced with the mean of the corresponding
@@ -161,6 +174,6 @@ xyplot(mean ~ interval | day,
 )
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
 
 Based on the comparison between weekend and weekdays, it appears the test subjects are in generally more active over weekends, whereas during weekdays the activity is focused on relatively narrow interval (mornings) where the peak is higher than anywhere over weekend.
