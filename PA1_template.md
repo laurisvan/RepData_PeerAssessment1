@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 This experiment examines personal activity monitoring device data, with the aim to answer the following questions:
 
@@ -15,13 +10,15 @@ The experiment is done with [R programming language](https://www.r-project.org/)
 
 ## Loading and preprocessing the data
 
-```{r, message=FALSE, warning=FALSE}
+
+```r
 # Don't echo this, as this particular output provides nothing to the study
 library(dplyr)
 library(lattice)
 ```
 
-```{r}
+
+```r
 # Load the data if it doesn't exist yet
 url <- "http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 if (!file.exists("activity.csv")) {
@@ -39,7 +36,8 @@ nasRemoved <- na.omit(data)
 
 ## What is mean total number of steps taken per day?
 
-```{r, echo=TRUE}
+
+```r
 means <- nasRemoved %>%
   group_by(date) %>%
   summarise(
@@ -56,12 +54,15 @@ hist(means$total, breaks=10,
 )
 ```
 
-The mean total number of steps per day is `r as.integer(meanSteps)`,
-the median total number of steps is `r medianSteps`.
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
+The mean total number of steps per day is 10766,
+the median total number of steps is 10765.
 
 ## What is the average daily activity pattern?
 
-```{r, echo=TRUE}
+
+```r
 dailyPatterns <- nasRemoved %>%
   group_by(interval) %>%
   summarise(
@@ -83,13 +84,15 @@ plot(dailyPatterns$mean, type="l",
 )
 ```
 
-The highest activity 5-minute interval is `r highestInterval`
-(`r highestIntervalHumanReadable`).
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
+The highest activity 5-minute interval is 835
+(13:55).
 
 ## Imputing missing values
 
-```{r, echo=TRUE}
 
+```r
 # Count the missing values
 missingValueCount <- sum(is.na(data$steps))
 
@@ -117,19 +120,20 @@ meanStepsDiff <- sum(meansCorrected$total) - sum(means$total)
 ```
 
 The number of values missing in the original data set is
-`r missingValueCount`. These were replaced with the mean of the corresponding
+2304. These were replaced with the mean of the corresponding
 five minute interval within the whole data set. Note that despite the
 additions, some NA values remain, as some intervals simply do not exist within
 the whole data set.
 
 After this correction, the mean total number of steps per day is
-`r as.integer(meanCorrectedSteps)`, the median total number of steps is
-`r as.integer(medianCorrectedSteps)`. The impact of filling in the missing
-data is `r as.integer(meanStepsDiff)` steps per day.
+9545, the median total number of steps is
+10395. The impact of filling in the missing
+data is 11668 steps per day.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r, echo=TRUE}
+
+```r
 # Create a factor variable to denote whether the variable is weekday or
 # weekend.
 weekdaysData <- filledData %>%
@@ -155,7 +159,8 @@ xyplot(mean ~ interval | day,
        layout=c(1,2,1),
        type = "l"
 )
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
 
 Based on the comparison between weekend and weekdays, it appears the test subjects are in generally more active over weekends, whereas during weekdays the activity is focused on relatively narrow interval (mornings) where the peak is higher than anywhere over weekend.
